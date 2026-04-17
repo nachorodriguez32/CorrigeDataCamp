@@ -29,10 +29,11 @@ for (ruta in ficheros_puntos) {
 evalua_df <- evalua_df[order(evalua_df$apellidos), ]
 
 
-alumnos_clase <- read.csv("AlumnosTD25_26.xlsx - Hoja1.csv")
+alumnos_clase <- read.csv("AlumnosTD25_26.xlsx", sep = ",", stringsAsFactors = FALSE)
 
-AlumnosNotas <- merge(alumnos_clase, evalua_df, by.x = "Apellido.s.", by.y = "apellidos", all.x = TRUE)
+names(alumnos_clase)[2] <- "apellidos"
 
+AlumnosNotas <- merge(alumnos_clase, evalua_df, by = "apellidos", all.x = TRUE)
 write.xlsx(evalua_df, "NotasRIntermedio.xlsx")
 write.xlsx(AlumnosNotas, "AlumnosNotas.xlsx")
 
