@@ -10,6 +10,20 @@ evalua_df <- data.frame()
 for (ruta in ficheros_puntos) {
   partes <- strsplit(ruta, "/")[[1]]
   nombre_alumno <- partes[2] 
-}
+
   apellido <- strsplit(nombre_alumno, " ")[[1]][1]
 
+  contenido <- readLines(ruta, warn = FALSE)
+  puntos_valor <- as.numeric(contenido)
+  
+  fila <- data.frame(
+    apellidos = apellido,
+    puntos = puntos_valor,
+    NomFile = basename(ruta),
+    Puntos = contenido,
+    stringsAsFactors = FALSE
+  )
+  evalua_df <- rbind(evalua_df, fila)
+}
+
+evalua_df <- evalua_df[order(evalua_df$apellidos), ]
